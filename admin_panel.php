@@ -1,14 +1,6 @@
 <?php
-/**
- * @Author: Adrien
- * @Date:   2014-11-27 09:40:27
- * @Last Modified by:   Adrien
- * @Last Modified time: 2014-12-01 09:57:41
- */
-
 session_start();
 
-// Si l'utilisateur n'a aucune session active (vidage cache + tentative d'aller dans des pages necessitant la connexion) on l'envoie sur l'index
 if ($_SESSION['user'] == null)
 {
 	header("Location: index.php");
@@ -31,7 +23,6 @@ catch (Exception $e)
 	exit(0);
 }
 
-// Récupération des variables nécessaires dans la page.
 $fullname = $doc->fullname;
 $mail = $doc->mail;
 $roles = $doc->roles;
@@ -134,7 +125,6 @@ $roles = $doc->roles;
 				</nav>
 			</div>
 		</div>
-		<!-- </div> -->
 
 		<div class="row">
 			<div class="page-header col-xs-12">
@@ -200,8 +190,7 @@ $roles = $doc->roles;
 				</div>
 			</div>
 		</div>
-		
-		<!-- TAB -->
+
 		<div class="tab">
 			<div class="col-md-offset-3 col-md-6">
 				<div class="panel panel-primary">

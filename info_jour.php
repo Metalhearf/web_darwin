@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// Si l'utilisateur n'a aucune session active (vidage cache + tentative d'aller dans des pages necessitant la connexion) on l'envoie sur l'index
 if ($_SESSION['user'] == null)
 {
   header("Location: index.php");
@@ -24,7 +23,6 @@ catch (Exception $e)
   exit(0);
 }
 
-// Récupération des variables nécessaires dans la page.
 $fullname = $doc->fullname;
 $mail = $doc->mail;
 $roles = $doc->roles;
@@ -66,56 +64,56 @@ $roles = $doc->roles;
           $compte = $compte->getDoc("org.couchdb.user:" . $_SESSION['user']);
           if (strcmp("admin", $compte->roles[0]) == 0)
           {
-           echo '<div class="navbar-default">
-                <a class="navbar-brand" href="admin_login.php"><i class="glyphicon glyphicon-eye-open"></i> Admin Panel</a>
+            echo '<div class="navbar-default">
+            <a class="navbar-brand" href="admin_login.php"><i class="glyphicon glyphicon-eye-open"></i> Admin Panel</a>
           </div>';
-          }
-          ?>
+        }
+        ?>
 
-          <div class="collapse navbar-collapse">
-            <ul class="nav navbar-nav navbar-right">
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <span class="glyphicon glyphicon-user"></span>
-                  <strong><?php echo $_SESSION['user']; ?></strong>
-                  <span class="glyphicon glyphicon-chevron-down"></span>
-                </a>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <span class="glyphicon glyphicon-user"></span>
+                <strong><?php echo $_SESSION['user']; ?></strong>
+                <span class="glyphicon glyphicon-chevron-down"></span>
+              </a>
 
-                <ul class="dropdown-menu">
-                  <li>
-                    <div class="navbar-login">
-                      <div class="row">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                          <p class="text-center">
-                            <span class="glyphicon glyphicon-user icon-size"></span>
-                          </p>
-                        </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                          <p class="text-left">
-                            <strong>
-                              <i class="glyphicon glyphicon-user"></i>
-                              <?php echo $fullname; ?>
-                            </strong>
-                          </p>
-                          <p class="text-left">
-                            <i class="glyphicon glyphicon-envelope"></i>
-                            <?php echo $mail; ?>
-                          </p>
-                          <p class="text-left">
-                            <i class="glyphicon glyphicon-eye-open"></i>
-                            <?php
-                            foreach($roles as $element)
-                            {
-                             echo $element . ' ';
-                           }
-                           ?>
-                         </p>
-                       </div>
-                     </div>
-                   </div>
-                 </li>
+              <ul class="dropdown-menu">
+                <li>
+                  <div class="navbar-login">
+                    <div class="row">
+                      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <p class="text-center">
+                          <span class="glyphicon glyphicon-user icon-size"></span>
+                        </p>
+                      </div>
+                      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <p class="text-left">
+                          <strong>
+                            <i class="glyphicon glyphicon-user"></i>
+                            <?php echo $fullname; ?>
+                          </strong>
+                        </p>
+                        <p class="text-left">
+                          <i class="glyphicon glyphicon-envelope"></i>
+                          <?php echo $mail; ?>
+                        </p>
+                        <p class="text-left">
+                          <i class="glyphicon glyphicon-eye-open"></i>
+                          <?php
+                          foreach($roles as $element)
+                          {
+                            echo $element . ' ';
+                          }
+                          ?>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </li>
 
-                 <li>
+                <li>
                   <div class="navbar-login navbar-login-session">
                     <div class="row">
                       <div class="col-lg-12">
@@ -138,7 +136,6 @@ $roles = $doc->roles;
       </div>
     </div>
 
-    <!-- TAB -->
     <div class="tab">
       <div class="col-md-offset-3 col-md-6">
         <div class="panel panel-primary">
@@ -163,32 +160,37 @@ $roles = $doc->roles;
               <?php
               $client = new couchClient ('http://' . $_SESSION['user'] . ':' . $_SESSION['psw'] . '@adrien.no-ip.org:5984', $_GET['name']);
               $doc = $client->getAllDocs();
-              foreach($doc->rows as $row){
-               if (strncmp($row->id, "info", 4) != 0){
-                try{$candidat = $client->getDoc($row->id);}
-                catch(Exception $e)
+              foreach($doc->rows as $row)
+              {
+                if (strncmp($row->id, "info", 4) != 0)
                 {
-                 echo "Something weird happened: ".$e->getMessage()."\n";
-                 exit(1);
-               }
-               echo ' <tr>
-               <td>
-                <img src="img/favicon.png" alt="photo" class="img-circle" height="50" width="50">
-              </td>
-              <td>' . $candidat->_id . '</td>
-              <td><a href="info_candidat.php?id=' . $candidat->_id . '&name=' . $_GET["name"] .'&fullname=' . $candidat->fullname . '">' . $candidat->fullname . '</a></td>
-              <td><a href="mailto:' . $candidat->mail . '">' . $candidat->mail . '</a></td>
-            </tr>';
-          }
-        }
-        ?>
+                  try
+                  {
+                    $candidat = $client->getDoc($row->id);
+                  }
+                  catch(Exception $e)
+                  {
+                    echo "Something weird happened: ".$e->getMessage()."\n";
+                    exit(1);
+                  }
+                  echo ' <tr>
+                  <td>
+                    <img src="img/favicon.png" alt="photo" class="img-circle" height="50" width="50">
+                  </td>
+                  <td>' . $candidat->_id . '</td>
+                  <td><a href="info_candidat.php?id=' . $candidat->_id . '&name=' . $_GET["name"] .'&fullname=' . $candidat->fullname . '">' . $candidat->fullname . '</a></td>
+                  <td><a href="mailto:' . $candidat->mail . '">' . $candidat->mail . '</a></td>
+                </tr>';
+                }
+              }
+            ?>
 
 
-      </tbody>
-    </table>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
-</div>
-</div>
 </div>
 </div>
 </body>

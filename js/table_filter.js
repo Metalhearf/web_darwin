@@ -8,7 +8,7 @@
 *	The important attributes are 'data-action="filter"' and 'data-filters="#table-selector"'
 */
 (function(){
-    'use strict';
+	'use strict';
 	var $ = jQuery;
 	$.fn.extend({
 		filterTable: function(){
@@ -26,10 +26,10 @@
 						if($target.find('tbody tr:visible').size() === 0) {
 							var col_count = $target.find('tr').first().find('td').size();
 							var no_results = $('<tr class="filterTable_no_results"><td colspan="'+col_count+'">Oups ! Aucun résulat trouvé ! :(</td></tr>')
-							$target.find('tbody').append(no_results);
+								$target.find('tbody').append(no_results);
+							}
 						}
-					}
-				});
+					});
 			});
 		}
 	});
@@ -38,16 +38,16 @@
 
 $(function(){
     // attach table filter plugin to inputs
-	$('[data-action="filter"]').filterTable();
+    $('[data-action="filter"]').filterTable();
 
-	$('.container').on('click', '.panel-heading span.filter', function(e){
-		var $this = $(this),
-				$panel = $this.parents('.panel');
+    $('.container').on('click', '.panel-heading span.filter', function(e){
+    	var $this = $(this),
+    	$panel = $this.parents('.panel');
 
-		$panel.find('.panel-body').slideToggle();
-		if($this.css('display') != 'none') {
-			$panel.find('.panel-body input').focus();
-		}
-	});
-	$('[data-toggle="tooltip"]').tooltip();
+    	$panel.find('.panel-body').slideToggle();
+    	if($this.css('display') != 'none') {
+    		$panel.find('.panel-body input').focus();
+    	}
+    });
+    $('[data-toggle="tooltip"]').tooltip();
 })

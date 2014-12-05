@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// Si l'utilisateur n'a aucune session active (vidage cache + tentative d'aller dans des pages necessitant la connexion) on l'envoie sur l'index
 if ($_SESSION['user'] == null)
 {
   header("Location: index.php");
@@ -24,7 +23,6 @@ catch (Exception $e)
   exit(0);
 }
 
-// Récupération des variables nécessaires dans la page.
 $fullname = $doc->fullname;
 $mail = $doc->mail;
 $roles = $doc->roles;
@@ -69,81 +67,81 @@ $roles = $doc->roles;
           $compte = $compte->getDoc("org.couchdb.user:" . $_SESSION['user']);
           if (strcmp("admin", $compte->roles[0]) == 0)
           {
-           echo '<div class="navbar-default">
-                <a class="navbar-brand" href="admin_login.php"><i class="glyphicon glyphicon-eye-open"></i> Admin Panel</a>
+            echo '<div class="navbar-default">
+            <a class="navbar-brand" href="admin_login.php"><i class="glyphicon glyphicon-eye-open"></i> Admin Panel</a>
           </div>';
-          }
-          ?>
+        }
+        ?>
 
-          <div class="collapse navbar-collapse">
-            <ul class="nav navbar-nav navbar-right">
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <span class="glyphicon glyphicon-user"></span>
-                  <strong><?php echo $_SESSION['user']; ?></strong>
-                  <span class="glyphicon glyphicon-chevron-down"></span>
-                </a>
-                <ul class="dropdown-menu">
-                  <li>
-                    <div class="navbar-login">
-                      <div class="row">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                          <p class="text-center"> <span class="glyphicon glyphicon-user icon-size"></span> </p>
-                        </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                          <p class="text-left">  <i class="glyphicon glyphicon-user"></i><strong><?php echo $fullname; ?></strong></p>
-                          <p class="text-left"> <i class="glyphicon glyphicon-envelope"></i> <?php echo $mail; ?> </p>
-                          <p class="text-left"> <i class="glyphicon glyphicon-eye-open"></i>
-                            <?php foreach($roles as $element) { echo $element . ' '; } ?>
-                          </p>
-                        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <span class="glyphicon glyphicon-user"></span>
+                <strong><?php echo $_SESSION['user']; ?></strong>
+                <span class="glyphicon glyphicon-chevron-down"></span>
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <div class="navbar-login">
+                    <div class="row">
+                      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <p class="text-center"> <span class="glyphicon glyphicon-user icon-size"></span> </p>
+                      </div>
+                      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <p class="text-left">  <i class="glyphicon glyphicon-user"></i><strong><?php echo $fullname; ?></strong></p>
+                        <p class="text-left"> <i class="glyphicon glyphicon-envelope"></i> <?php echo $mail; ?> </p>
+                        <p class="text-left"> <i class="glyphicon glyphicon-eye-open"></i>
+                          <?php foreach($roles as $element) { echo $element . ' '; } ?>
+                        </p>
                       </div>
                     </div>
-                  </li>
-                  <li>
-                    <div class="navbar-login navbar-login-session">
-                      <div class="row">
-                        <div class="col-lg-12">
-                          <p> <a href="deconnexion.php" class="btn btn-danger btn-block">Déconnexion</a> </p>
-                        </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="navbar-login navbar-login-session">
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <p> <a href="deconnexion.php" class="btn btn-danger btn-block">Déconnexion</a> </p>
                       </div>
                     </div>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-        </nav>
-      </div>
+                  </div>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </nav>
     </div>
-    <div class="row">
-      <div class="page-header col-lg-12 col-md-12 col-sm-12">
-        <h1>Accueil Darwin</h1>
-      </div>
+  </div>
+  <div class="row">
+    <div class="page-header col-lg-12 col-md-12 col-sm-12">
+      <h1>Accueil Darwin</h1>
     </div>
-    <?php if (isset($_SESSION['error']))
+  </div>
+
+  <?php
+  if (isset($_SESSION['error']))
+  {
+    echo $_SESSION['error'];
+    unset($_SESSION['error']);
+  }
+  ?>
+
+  <div id="wrap" class="text-right">
+    <?php
+    $compte = new couchClient ('http://' . $_SESSION['user'] . ':' . $_SESSION['psw'] . '@adrien.no-ip.org:5984','_users');
+    $compte = $compte->getDoc("org.couchdb.user:" . $_SESSION['user']);
+    if (strcmp("admin", $compte->roles[0]) == 0)
     {
-      echo $_SESSION['error'];
-      unset($_SESSION['error']);
-    }
-    ?>
+      echo '<button class="btn btn-success" data-toggle="modal" data-target="#myModal">
+      <i class="glyphicon glyphicon-plus"></i> Créer une journée
+    </button>';
+  }
+  ?>
+</div>
 
-    <!-- submit -->
-    <div id="wrap" class="text-right">
-      <?php
-      $compte = new couchClient ('http://' . $_SESSION['user'] . ':' . $_SESSION['psw'] . '@adrien.no-ip.org:5984','_users');
-      $compte = $compte->getDoc("org.couchdb.user:" . $_SESSION['user']);
-      if (strcmp("admin", $compte->roles[0]) == 0)
-      {
-       echo '<button class="btn btn-success" data-toggle="modal" data-target="#myModal">
-       <i class="glyphicon glyphicon-plus"></i> Créer une journée
-     </button>';
-   }
-   ?>
- </div>
-
- <!-- Modal -->
- <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="container">
     <div class="row">
       <div class="col-sm-6 col-sm-offset-3 text-center cadre">
@@ -173,7 +171,6 @@ $roles = $doc->roles;
   </div>
 </div>
 
-<!-- fin modal -->
 <div class="tab">
   <div class="col-md-offset-3 col-md-6">
     <div class="panel panel-primary">
@@ -210,36 +207,33 @@ $roles = $doc->roles;
             {
               $client = new couchClient ('http://' . $_SESSION['user'] . ':' . $_SESSION['psw'] . '@adrien.no-ip.org:5984',$doc[$i]);
               $content = $client->getDoc("info");
-              echo '
-              <tr>
-                <form name="form" method="post" action="classes/del_db.php">
-                  <td>' . $content->date . '</td>
-                  <td>' . $content->description . '</td>
-                  <td>' . $content->size . '</td>
-                  ';
-                  if (strcmp("admin", $admin->roles[0]) == 0)
-                  {
-                    echo	'<td><button type="buttom" class="btn btn-danger" name="dbName" value="' . $content->description . '">
-                    <i class="glyphicon glyphicon-trash"></i>
-                  </button></td>';
-                }
-                echo '</form>
-                <td>
-
-                  <a href="info_jour.php?name=' . $doc[$i] . '">
-                    <button type="button" name="info" class="btn btn-info">
-                     <i class="glyphicon glyphicon-share-alt"></i> Voir ce jour
-                   </button>
-                 </a>
-               </td>
-             </tr>';
-           }
-         }
-         ?>
-       </tbody>
-     </table>
-   </div>
- </div>
+              echo '<tr>
+              <form name="form" method="post" action="classes/del_db.php">
+                <td>' . $content->date . '</td>
+                <td>' . $content->description . '</td>
+                <td>' . $content->size . '</td>
+                ';
+                if (strcmp("admin", $admin->roles[0]) == 0)
+                {
+                  echo	'<td><button type="buttom" class="btn btn-danger" name="dbName" value="' . $content->description . '">
+                  <i class="glyphicon glyphicon-trash"></i>
+                </button></td>';
+              }
+              echo '</form> <td>
+              <a href="info_jour.php?name=' . $doc[$i] . '">
+                <button type="button" name="info" class="btn btn-info">
+                  <i class="glyphicon glyphicon-share-alt"></i> Voir ce jour
+                </button>
+              </a>
+            </td>
+          </tr>';
+        }
+      }
+      ?>
+    </tbody>
+  </table>
+</div>
+</div>
 </div>
 
 </div>

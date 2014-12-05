@@ -18,8 +18,8 @@ catch ( Exception $e) {
 	<button type="button" class="close" data-dismiss="alert"></button>
 	<strong>Attention !</strong> Désolé, mais ce compte d\'utilisateur ou mot de passe est incorrect.
 </div>';
-	header('Location: ../admin_login.php');
-	exit(0);
+header('Location: ../admin_login.php');
+exit(0);
 }
 
 if($databases->roles[0] == 'admin')
@@ -32,8 +32,8 @@ if($databases->roles[0] == 'admin')
 }
 
 $_SESSION['error'] = '<div class="alert alert-danger" role="alert">
-	<button type="button" class="close" data-dismiss="alert"></button>
-	<strong>Attention !</strong> Vous n\'avez pas le droit d\'accéder à cette partie du site. ;)
+<button type="button" class="close" data-dismiss="alert"></button>
+<strong>Attention !</strong> Vous n\'avez pas le droit d\'accéder à cette partie du site. ;)
 </div>';
 header('Location: ../admin_login.php');
 ?>
