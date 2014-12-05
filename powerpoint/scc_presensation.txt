@@ -1,0 +1,25 @@
+Voilà.
+Nous voici à présent sur le portail de Darwin's Theory.
+
+Connectons-nous à présent en tant qu'administrateur, afin d'avoir accès à l'intégralité des fonctionnalités pour cette démonstration.
+A noter qu'il existe deux types d'utilisateurs : les administrateurs possédant tous les droits sur la plateforme, et les examinateurs (les assets) avec des droits réguliers.
+
+Après la connexion, nous tombons sur la page d'Accueil.
+Elle recense les journées existantes.
+En tant qu'administrateur, nous aurons la possibilité de supprimer ou d'ajouter une journée.
+Pour cet ajout de journée, il sera nécessaire de fournir un fichier .CSV, permettant de récupérer les informations des candidats de la journée.
+
+Après avoir cliqué sur "Voir ce Jour", nous obtenons la liste de tous les candidats inscrits.
+Il sera possible de rechercher un candidat, par exemple je souhaite obtenir les commentaires de Daario Naharis, il suffit de cliquer sur son nom.
+
+Suite à cela, nous tombons sur sa fiche personnalisée où il sera possible, en tant qu'examinateur de laisser des commentaires, et en tant qu'administrateur de placer le commentaire final.
+
+Passons à présent sur le panneau d'administration.
+De la même manière, il faut être habilité à y accéder. Il faut être administrateur pour se connecter.
+
+Dans cette partie protégée du site, les administrateurs ont la possibilité d'ajouter ou de supprimer des utilisateurs de confiance : d'autres administrateurs ou bien d'autres examinateurs.
+
+Pour finir, le code source est disponible sur GitHub, et le projet est hébergé en ligne : vous pourrez y accéder à n'importe quel moment.
+
+C'est sur cela que je concluerai, pour le projet Darwin's Theory.
+Merci de votre attention.
