@@ -16,7 +16,7 @@ catch ( Exception $e) {
 	//echo "Some error happened during the request. This is certainly because your Name or Password is incorrect.\n";
 	$_SESSION['error'] = '<div class="alert alert-danger" role="alert">
 	<button type="button" class="close" data-dismiss="alert"></button>
-	<strong>Attention !</strong> Désolé, mais ce compte d\'utilisateur ou mot de passe est incorrect.
+	<strong>Attention !</strong> Désolé, mais ce compte d\'utilisateur ou mot de passe est incorrect. <i>Si le problème persiste, contactez Adrien pour vérifier que le serveur soit effectivement allumé.</i>
 </div>';
 header('Location: ../admin_login.php');
 exit(0);
